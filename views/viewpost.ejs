@@ -1,0 +1,130 @@
+<%- include('partials/header.ejs') %>
+
+
+  <% if (locals.viewPost && locals.year) {%>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <div class="lc-block">
+                    <img class="img-fluid" src= <%= viewPost.img_path %> loading="lazy">
+                </div><!-- /lc-block -->
+            </div><!-- /col -->
+        </div>
+        <div class="row mt-4">
+            <div class="col-md-10 offset-md-1 px-4">
+                <div class="mb-3 badge text-bg-success text-wrap badges_width">
+                    <%= viewPost.tags %>
+                </div>
+                <div class="lc-block mb-4">
+                    <div editable="rich">
+                        <h1><%= viewPost.title %></h1>
+                        <p class="text-success"><%= viewPost.subhead %></p>
+                        <div class="row">
+                            <div class="col">
+                                <p class="text-info">Published: <%= year %></p>
+                            </div>
+                            <div class="col">
+                                <p class="text-info">Author: <%= viewPost.author %></p>
+                            </div>
+                            <div class="col ">
+                                <button type="button" class="btn btn-primary" id="edit_butt" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Edit
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /lc-block -->
+            </div><!-- /col -->
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1 px-4 drop_caps">
+                <div class="lc-block">
+                    <div editable="rich">
+                        <p> <%= viewPost.content %> </p>
+                    </div>
+                </div><!-- /lc-block -->
+            </div><!-- /col -->
+        </div>
+    </div>
+
+
+    <!-- Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModal" aria-modal="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-dark-emphasis">
+                    <div class="container">
+                      <div class="row justify-content-center">
+                            <div class="card-body p-3 p-md-4 p-xl-5">
+                              <div class="row">
+                                <div class="col-12 text-center mb-4">
+                                  <h2>Edit the Article</h2>
+                                </div>
+                              </div>
+                
+                              <form action="/edit<%= viewPost.id %>" method="POST" id="edit_form" enctype="multipart/form-data" autocomplete="off">
+                                <div class="row gy-3 overflow-hidden">
+                                 <div class="col-12">
+                                      <div class="form-floating mb-3">
+                                        <input type="number" class="form-control" name="edit_idNumber" id="edit_idNumber" value="<%= viewPost.id %>" placeholder="ID..." disabled>
+                                        <label for="edit_author_name" class="form-label">Id </label>
+                                      </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" name="edit_author_name" id="edit_author_name"  placeholder="Author Full Name..."  required>
+                                      <label for="edit_author_name" class="form-label">Author Full Name...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" name="edit_article_title" id="edit_article_title" placeholder="Title of the Article..."  required maxlength="80">
+                                      <label for="edit_article_title" class="form-label">Title of the Article...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" name="edit_subheading" id="edit_subheading" placeholder="Subheading..."  required>
+                                      <label for="edit_subheading" class="form-label">Subheading...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <input type="text" class="form-control" name="edit_tags" id="edit_tags" value="" placeholder="Tags..."  required>
+                                      <label for="edit_tags" class="form-label">Tags...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <input type="file" accept="image/*" class="form-control" name="edit_post_img" id="edit_post_img" placeholder="Upload an Image..." required>
+                                      <label for="edit_post_img" class="form-label">Upload an Image...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                      <textarea class="form-control" name="edit_article_body" id="edit_article_body" placeholder="Write your article here..." rows="5" required></textarea>
+                                      <label for="edit_article_body" class="form-label">Write your article here...</label>
+                                    </div>
+                                  </div>
+                                  <div class="col-12">
+                                    <div class="d-grid">
+                                      <button class="btn bsb-btn-2xl btn-primary" type="submit">Edit</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </form>
+      
+                        </div>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+  <% } %>
+
+<%- include('partials/footer.ejs') %>
